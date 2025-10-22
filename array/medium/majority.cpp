@@ -25,7 +25,7 @@ class Solution{
 
     // Moore's Voting Algorithm 
     int majority(vector<int>&nums){
-        int n =0;
+        int n =nums.size();
         int count =0;
         int element =0;
         for(int i=0;i<n;i++){
@@ -33,7 +33,7 @@ class Solution{
                 element = nums[i];
                 count = 1;
             }
-            count += (nums[i] == element)? 1:-1;
+            else count += (nums[i] == element)? 1:-1;
         }
         return element;
     }
