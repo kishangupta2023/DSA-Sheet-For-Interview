@@ -17,8 +17,9 @@ class Solution {
   public:
     int lowerBound(vector<int>&arr,int target){
         int low = 0;
+        int n = arr.size();
         int high = arr.size()-1;
-        int ans = high;
+        int ans = n;
         while(low <= high){
             int mid = low + (high-low)/2;
             if(arr[mid] >= target){
