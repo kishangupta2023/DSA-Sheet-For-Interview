@@ -12,6 +12,10 @@
 using namespace std;
 class Solution {
 public:
+
+// bruteforce -> use the methid take or not take to generate all the subset then put it int set then again into the vector and return 
+// tc -> 2pow(n)*log2pow(n) == 0(mlogm) where m = 2pown
+
     void generate(int ind,vector<int>&nums,vector<int>&lists,vector<vector<int>>&ans){
         ans.push_back(lists);  
         for(int i=ind;i<nums.size();i++){
@@ -28,4 +32,7 @@ public:
         generate(0,nums,lists,ans);
         return ans;
     }
+    // tc -> 2pow(n)*n  average length for putting into ans is n and 2pown for recursion 
+    // sc -> 2pow(n)*o(k) where k is average length k
+
 };
