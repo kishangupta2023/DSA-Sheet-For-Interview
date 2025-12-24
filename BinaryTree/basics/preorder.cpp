@@ -33,3 +33,39 @@ int main(){
     root->right = new Node(3);
     root->left->right = new Node(5);
 }
+
+
+// iterative preorder Traversal 
+
+//Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int>ans;
+        stack<TreeNode*>st;
+        if(root == NULL) return ans;
+        st.push(root);
+        while(!st.empty()){
+            int size = st.size();
+            for(int i=0;i<size;i++){
+                TreeNode* node = st.top();
+                st.pop();
+                if(node->right != NULL) st.push(node->right);
+                if(node->left != NULL) st.push(node->left);
+                ans.push_back(node->val);
+            }
+        }
+        return ans;
+    }
+    // tc -> 0(n)
+    // sc -> 0(n)
+};
