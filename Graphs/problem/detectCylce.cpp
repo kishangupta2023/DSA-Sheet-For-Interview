@@ -44,6 +44,41 @@ class Solution{
 };
 
 
-int main(){
-    return 0;
-}
+class Solution {
+  public:
+    bool isCycle(int V, vector<vector<int>>& edges) {
+        // Code here
+        vector<vector<int>>adj(V);
+        for(int i=0;i<edges.size();i++){
+            int u = edges[i][0];
+            int v = edges[i][1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        vector<int>visited(V,0);
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+              queue<pair<int,int>>q;
+             q.push({i,-1});
+            while(!q.empty()){
+            int node = q.front().first;
+            int parent = q.front().second;
+            q.pop();
+            visited[node] = 1;
+            
+            for(auto it: adj[node]){
+                if(!visited[it]){
+                    q.push({it,node});
+                    visited[it] = 1;
+                    }else if(parent != it){
+                        return true;
+                    }
+                }
+            }
+            }
+        }
+        return false;
+    }
+    // tc->0(2E) + 0(V+2E)==0(V+E)
+    // sc->0(V+E)+0(V)+0(V) == 0(V+E)
+};

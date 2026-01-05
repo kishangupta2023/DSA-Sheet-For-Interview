@@ -28,7 +28,6 @@ class Solution {
                         dfs(word,seq);
                         seq.pop_back();
                     }
-                  
                 }
                 word[i] = original;
         }
