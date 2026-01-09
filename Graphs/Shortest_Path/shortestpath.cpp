@@ -49,6 +49,35 @@ class Solution{
 // tc- same as bfs
 // sc - whatever extra is created  == o(v+2E)
 
-int main(){
-    return 0;
-}
+class Solution {
+  public:
+    vector<int> shortestPath(int V, vector<vector<int>> &edges, int src) {
+        // code here
+        vector<vector<int>>adj(V);
+        for(int i=0;i<edges.size();i++){
+            int u = edges[i][0];
+            int v = edges[i][1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        vector<int>path(V,1e9);
+        queue<pair<int,int>>q;
+        q.push({src,0});
+        path[src] = 0;
+        while(!q.empty()){
+            int node = q.front().first;
+            int dist = q.front().second;
+            q.pop();
+            for(auto it:adj[node]){
+                if(dist + 1 < path[it]){
+                    q.push({it,dist+1});
+                    path[it] = dist+1;
+                }
+            }
+        }
+        for(int i=0;i<path.size();i++){
+            if(path[i] == 1e9) path[i] = -1;
+        }
+        return path;
+    }
+};

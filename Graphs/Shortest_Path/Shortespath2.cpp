@@ -61,12 +61,57 @@ class Solution {
             }
         }
         return dist;
-        
-
-
     }
 };
 
-int main(){
-    return 0;
-}
+
+
+// User function Template for C++
+class Solution {
+  public:
+    void dfs(int node,vector<vector<pair<int,int>>>&adj,vector<int>&visited,
+        stack<int>&st){
+            visited[node] = 1;
+            for(auto it:adj[node]){
+                if(!visited[it.first]){
+                    dfs(it.first,adj,visited,st);
+                }
+            }
+            st.push(node);
+        }
+    vector<int> shortestPath(int V, int E, vector<vector<int>>& edges) {
+        // code here
+        vector<vector<pair<int,int>>>adj(V);
+        for(int i=0;i<E;i++){
+            int u = edges[i][0];
+            int v = edges[i][1];
+            int w = edges[i][2];
+            adj[u].push_back({v,w});
+        }
+        vector<int>visited(V,0);
+        stack<int>st;
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                dfs(i,adj,visited,st);
+            }
+        }
+        //tc-> 0(N+E)
+        vector<int>dist(V,1e9);
+        dist[0] =0;
+        while(!st.empty()){
+            int node = st.top();
+            st.pop();
+            for(auto it:adj[node]){
+                int v = it.first;
+                int w = it.second;
+                if(dist[node] != 1e9 && dist[node] + w < dist[v]){
+                    dist[v] = dist[node] + w;
+                }
+            }
+        }
+        for(int i=0;i<V;i++){
+            if(dist[i] == 1e9) dist[i] = -1;
+        }
+        return dist;
+    }
+};

@@ -26,6 +26,7 @@ class Solution{
             ans.push_back(st.top());
             st.pop();
         }
+        return ans;
     }
 };
 //sc -o(n)
