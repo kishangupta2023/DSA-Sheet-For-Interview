@@ -38,3 +38,49 @@ class Solution{
 };
 // tc - ElogE + ElogE = ElogE
 // sc - o(E)
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    vector<pair<int,int>> spanningTreeEdges(int V, vector<vector<int>> adj[]) {
+        
+        // {weight, node}
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+
+        vector<int> key(V, 1e9), parent(V, -1), vis(V, 0);
+
+        key[0] = 0;
+        pq.push({0, 0});
+
+        while (!pq.empty()) {
+            int node = pq.top().second;
+            pq.pop();
+
+            if (vis[node]) continue;
+            vis[node] = 1;
+
+            for (auto &it : adj[node]) {
+                int adjNode = it[0];
+                int wt = it[1];
+
+                if (!vis[adjNode] && wt < key[adjNode]) {
+                    key[adjNode] = wt;
+                    parent[adjNode] = node;
+                    pq.push({key[adjNode], adjNode});
+                }
+            }
+        }
+
+        // Store MST edges
+        vector<pair<int,int>> mstEdges;
+        for (int i = 1; i < V; i++) {
+            if (parent[i] != -1) {
+                mstEdges.push_back({parent[i], i});
+            }
+        }
+
+        return mstEdges;
+    }
+};
