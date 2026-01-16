@@ -85,3 +85,60 @@ class Solution{
        return mstWt;
     }
 };
+
+// User function Template for C++
+class DisjointSets{
+    vector<int>rank,parent;
+    public:
+    DisjointSets(int n){
+        rank.resize(n+1,0);
+        parent.resize(n+1);
+        for(int i=0;i<=n;i++) parent[i] = i;
+    }
+    int find(int x){
+        if(parent[x] == x) return x;
+        return parent[x] = find(parent[x]);
+    }
+    void unionByRank(int x,int y){
+        int ulp_x = find(x);
+        int ulp_y = find(y);
+        if(ulp_x == ulp_y) return;
+        if(rank[ulp_x] < rank[ulp_y]){
+            parent[ulp_x] = ulp_y;
+        }
+        else if(rank[ulp_x] > rank[ulp_y]){
+            parent[ulp_y] = ulp_x;
+        }
+        else{
+            parent[ulp_y] = ulp_x;
+            rank[ulp_x]++;
+        }
+    }
+};
+class Solution {
+  public:
+    int kruskalsMST(int V, vector<vector<int>> &edges) {
+        // code here
+        vector<pair<int,pair<int,int>>>edge;
+        for(auto it: edges){
+            int u = it[0];
+            int v = it[1];
+            int w = it[2];
+            edge.push_back({w,{u,v}});
+            edge.push_back({w,{v,u}});
+        }
+        sort(edge.begin(),edge.end());
+        int weight = 0;
+        DisjointSets ds(V);
+        for(int i=0;i<edge.size();i++){
+            int w = edge[i].first;
+            int u = edge[i].second.first;
+            int v = edge[i].second.second;
+            if(ds.find(u) != ds.find(v)){
+                weight += w;
+                ds.unionByRank(u,v);
+            }
+        }
+        return weight;
+    }
+};
